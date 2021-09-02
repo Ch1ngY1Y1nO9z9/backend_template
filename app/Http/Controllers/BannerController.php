@@ -41,10 +41,10 @@ class BannerController extends Controller
         $new_record -> sort = $request->sort;
 
         $new_record -> save();
-        return redirect('/admin/banner')->with('message','新增成功!');
+        return redirect('/admin/banner')->with('success','新增成功!');
     }
 
-    public function edit($id)
+    public function show($id)
     {
         $items = Banners::find($id);
         return view($this->edit,compact('items'));
@@ -64,16 +64,16 @@ class BannerController extends Controller
 
         $items -> save();
 
-        return redirect('/admin/banner')->with('message','更新成功!');
+        return redirect('/admin/banner')->with('success','更新成功!');
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $items = Banners::find($id);
         $this->delete_file($items->img);
         $items->delete();
 
-        return redirect('/admin/banner')->with('message','刪除成功!');
+        return redirect('/admin/banner')->with('success','刪除成功!');
     }
 
     //上傳檔案

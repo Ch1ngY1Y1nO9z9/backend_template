@@ -11,13 +11,13 @@
                 <div class="card-header">Recommend Supplier - 新增</div>
 
                 <div class="card-body">
-                    <form method="post" action="/admin/banner/store" enctype="multipart/form-data">
+                    <form method="post" action="/admin/banner" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
                             <label for="img" class="col-sm-2 col-form-label">banner <br><small
                                     class="text-danger">*建議圖片尺寸1920px(寬)*730px(高)</small></label>
                             <div class="col-sm-10">
-                                <input type="file" class="form-control" id="img" value="" name="img" required>
+                                <input type="file" class="form-control" id="img" value="" name="img" required accept=".jpg, .png, .gif">
                             </div>
                         </div>
 

@@ -12,8 +12,9 @@
                 <div class="card-header">Recommend Supplier - 編輯</div>
 
                 <div class="card-body">
-                    <form method="post" action="/admin/banner/update/{{$items->id}}" enctype="multipart/form-data">
+                    <form method="post" action="/admin/banner/{{$items->id}}" enctype="multipart/form-data">
                         @csrf
+                        @method('put')
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">現有圖片</label>
                             <div class="col-sm-10 mb-3">

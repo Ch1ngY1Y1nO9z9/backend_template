@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 class SeoController extends Controller
 {
     public function index() {
-        $seo = Seo::where('id', 1)->first();
+        $seo = Seo::firstOrCreate([]);
         return view('admin.seo.index',compact('seo'));
     }
 
     public function update(Request $request) {
         $data = $request->all();
-        Seo::find(1)->update($data);
-        return redirect('/admin/seo')->with('message','更新成功!');
+        Seo::first()->update($data);
+        return redirect('/admin/seo')->with('success','更新成功!');
     }
 
 }

@@ -16,9 +16,9 @@ class CreateSeoTable extends Migration
         Schema::create('seo', function (Blueprint $table) {
             $table->id();
             $table->string('page')->default('default_seo');
-            $table->string('keyword')->default('正龍塑膠');
-            $table->string('title')->default('正龍塑膠');
-            $table->string('description')->default('正龍塑膠');
+            $table->string('keyword')->nullable();
+            $table->string('title')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

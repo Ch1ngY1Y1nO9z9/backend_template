@@ -54,20 +54,17 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::post('/img/post','HomeController@image_post');
 
     //SEO設定
-    Route::get('seo', 'SeoController@index');
-    Route::post('seo', 'SeoController@update');
+    Route::get('/seo', 'SeoController@index');
+    Route::put('/seo', 'SeoController@update');
 
     //about
     Route::get('about_us', 'AboutController@index');
-    Route::post('about_us', 'AboutController@update');
+    Route::put('about_us', 'AboutController@update');
 
     // Banner
-    Route::get('banner','BannerController@index');
     Route::get('banner/create','BannerController@create');
-    Route::post('banner/store', 'BannerController@store');
-    Route::get('banner/edit/{id}', 'BannerController@edit');
-    Route::post('banner/update/{id}', 'BannerController@update');
-    Route::post('banner/delete/{id}', 'BannerController@delete');
+    Route::apiResource('banner','BannerController');
+
 
     //supplier
     Route::get('supplier','SupplierController@index');

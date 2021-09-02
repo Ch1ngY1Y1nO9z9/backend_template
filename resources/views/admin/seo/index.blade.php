@@ -9,6 +9,11 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-sm-12">
+                @if(Session::has('success'))
+                    <div class="alert alert-success" role="alert">
+                        {{Session::get('success')}}
+                    </div>
+                @endif
                 <div class="card">
                     <h4 class="card-header">
                         SEO設定
@@ -16,6 +21,7 @@
                     <div class="card-body">
                         <form action="/admin/seo" method="post">
                             @csrf
+                            @method('put')
                             <div class="form-group">
                                 <label for="title" class="col-form-label">網頁名稱</label>
                                 <input type="text" class="form-control" id="title" name="title" value="{{$seo->title}}" required>
@@ -73,10 +79,4 @@
         } );
 
     </script>
-
-    @if(Session::has('message'))
-        <script>
-            alert('更新成功!')
-        </script>
-    @endif
 @endsection

@@ -11,6 +11,11 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-sm-12">
+                @if(Session::has('success'))
+                    <div class="alert alert-success" role="alert">
+                        {{Session::get('success')}}
+                    </div>
+                @endif
                 <div class="card">
                     <h4 class="card-header">
                         關於我們
@@ -18,6 +23,7 @@
                     <div class="card-body">
                         <form action="/admin/about_us" method="post">
                             @csrf
+                            @method('put')
                             <div class="form-group">
                                 <textarea class="summernote" id="content_ch" name="content_ch">{{$about->content_ch}}</textarea>
                             </div>
@@ -92,10 +98,4 @@
             }
         });
     </script>
-
-    @if(Session::has('message'))
-        <script>
-            alert('更新成功!')
-        </script>
-    @endif
 @endsection
