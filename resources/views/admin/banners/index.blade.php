@@ -8,11 +8,18 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
+                {{-- 顯示任何成功與失敗的訊息 --}}
                 @if(Session::has('success'))
                     <div class="alert alert-success" role="alert">
                         {{Session::get('success')}}
                     </div>
                 @endif
+                @if($errors->any())
+                    <div class="alert alert-danger" role="alert">
+                        {{ $message }}
+                    </div>
+                @endif
+                
                 <div class="card">
                     <div class="card-header">Recommend Supplier管理</div>
 

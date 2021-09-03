@@ -44,7 +44,7 @@ class ProductVideoController extends Controller
         return redirect('/admin/product_video')->with('message','新增成功!');
     }
 
-    public function edit($id)
+    public function show($id)
     {
         $items = ProductVideo::find($id);
         return view($this->edit,compact('items'));
@@ -67,7 +67,7 @@ class ProductVideoController extends Controller
         return redirect('/admin/product_video')->with('message','更新成功!');
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $items = ProductVideo::find($id);
         $this->delete_file($items->img);

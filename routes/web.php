@@ -67,12 +67,13 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
 
     //supplier
-    Route::get('supplier','SupplierController@index');
     Route::get('supplier/create','SupplierController@create');
-    Route::post('supplier/store', 'SupplierController@store');
-    Route::get('supplier/edit/{id}', 'SupplierController@edit');
-    Route::post('supplier/update/{id}', 'SupplierController@update');
-    Route::post('supplier/delete/{id}', 'SupplierController@delete');
+    Route::apiResource('supplier','SupplierController');
+    // Route::get('supplier','SupplierController@index');
+    // Route::post('supplier/store', 'SupplierController@store');
+    // Route::get('supplier/edit/{id}', 'SupplierController@edit');
+    // Route::post('supplier/update/{id}', 'SupplierController@update');
+    // Route::post('supplier/delete/{id}', 'SupplierController@delete');
 
     //product_video
     Route::get('product_video','ProductVideoController@index');

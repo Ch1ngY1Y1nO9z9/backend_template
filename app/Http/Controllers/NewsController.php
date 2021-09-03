@@ -31,7 +31,7 @@ class NewsController extends Controller
 
     }
 
-    public function edit($id)
+    public function show($id)
     {
         $news = News::find($id);
         return view('admin.news.edit',compact('news'));

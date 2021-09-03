@@ -32,13 +32,13 @@ class SupplierController extends Controller
     {
         $new_record = Supplier::create($request->all());
         if($request->hasFile('img')){
-            $new_record->img = $this->upload_file($request->file('img'));
+            $new_record->img = upload_file($request->file('img'),'supplier');
         }
         $new_record -> save();
         return redirect('/admin/supplier')->with('message','新增成功!');
     }
 
-    public function edit($id)
+    public function show($id)
     {
         $items = Supplier::find($id);
         return view($this->edit,compact('items'));
@@ -59,37 +59,12 @@ class SupplierController extends Controller
         return redirect('/admin/supplier')->with('message','更新成功!');
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $items = Supplier::find($id);
-        $this->delete_file($items->img);
+        delete_file($items->img);
         $items->delete();
 
         return redirect('/admin/supplier')->with('message','刪除成功!');
-    }
-
-    //上傳檔案
-    public function upload_file($file){
-        $allowed_extensions =["png", "jpg", "gif", "PNG", "JPG", "GIF","jpeg","JPEG","pdf"];
-        if ($file->getClientOriginalExtension() &&
-            !in_array($file->getClientOriginalExtension(), $allowed_extensions))
-        {
-            return redirect()->back()->with('message','僅接受.jpg, .png, .gif, .jepg, .pdf格式檔案!');
-        }
-        $extension = $file->getClientOriginalExtension();
-        $destinationPath = public_path() . '/upload/supplier/';
-        $original_filename = $file->getClientOriginalName();
-
-        $filename = $file->getFilename() . '.' . $extension;
-        $url = '/upload/supplier/' . $filename;
-
-        $file->move($destinationPath, $filename);
-
-        return $url;
-    }
-
-    //刪除檔案
-    public function delete_file($path){
-        File::delete(public_path().$path);
     }
 }

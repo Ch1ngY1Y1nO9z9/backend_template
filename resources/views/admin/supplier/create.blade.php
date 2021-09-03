@@ -9,15 +9,17 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">Certification Supplier - 新增</div>
-
+                @error('img')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
                 <div class="card-body">
-                    <form method="post" action="/admin/supplier/store" enctype="multipart/form-data">
+                    <form method="post" action="/admin/supplier" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
                             <label for="img" class="col-sm-2 col-form-label">圖片 <br><small
                                     class="text-danger">*建議圖片尺寸230px(寬)*160px(高)</small></label>
                             <div class="col-sm-10">
-                                <input type="file" class="form-control" id="img" value="" name="img" required>
+                                <input type="file" class="form-control" id="img" value="" name="img" required accept=".jpg, .png, .gif">
                             </div>
                         </div>
 

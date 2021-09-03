@@ -34,7 +34,7 @@ class ProductTypeController extends Controller
         return redirect('/admin/product_type');
     }
 
-    public function edit($id)
+    public function show($id)
     {
         $item = ProductsType::find($id);
         return view('admin.productsType.edit',compact('item'));

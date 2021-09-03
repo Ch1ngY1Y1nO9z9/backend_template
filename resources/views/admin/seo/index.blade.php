@@ -14,6 +14,11 @@
                         {{Session::get('success')}}
                     </div>
                 @endif
+                @if($errors->any())
+                    <div class="alert alert-danger" role="alert">
+                        {{ $message }}
+                    </div>
+                @endif
                 <div class="card">
                     <h4 class="card-header">
                         SEO設定

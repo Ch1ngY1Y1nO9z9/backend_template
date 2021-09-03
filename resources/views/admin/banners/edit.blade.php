@@ -10,7 +10,9 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">Recommend Supplier - 編輯</div>
-
+                @error('img')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
                 <div class="card-body">
                     <form method="post" action="/admin/banner/{{$items->id}}" enctype="multipart/form-data">
                         @csrf

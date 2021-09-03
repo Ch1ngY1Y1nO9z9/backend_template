@@ -39,7 +39,7 @@ class PartnerController extends Controller
         return redirect('/admin/partner')->with('message','新增成功!');
     }
 
-    public function edit($id)
+    public function show($id)
     {
         $items = Partner::find($id);
         return view($this->edit,compact('items'));
@@ -59,7 +59,7 @@ class PartnerController extends Controller
         return redirect('/admin/partner')->with('message','更新成功!');
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $items = Partner::find($id);
         $this->delete_file($items->img);

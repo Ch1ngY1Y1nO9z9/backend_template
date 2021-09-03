@@ -34,7 +34,7 @@ class ProductsController extends Controller
         return redirect('/admin/products');
     }
 
-    public function edit($id)
+    public function show($id)
     {
         $item = Products::find($id);
         $types = ProductsType::all();
