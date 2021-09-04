@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Supplier;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
+use App\Http\Requests\SupplierRequest;
 
 class SupplierController extends Controller
 {
     function __construct()
     {
-        $this->redirect = '/admin';
+        $this->redirect = '/admin/supplier';
         $this->index = 'admin.supplier.index';
         $this->create = 'admin.supplier.create';
         $this->edit = 'admin.supplier.edit';
@@ -28,14 +27,14 @@ class SupplierController extends Controller
         return view($this->create);
     }
 
-    public function store(Request $request)
+    public function store(SupplierRequest $request)
     {
         $new_record = Supplier::create($request->all());
         if($request->hasFile('img')){
             $new_record->img = upload_file($request->file('img'),'supplier');
         }
         $new_record -> save();
-        return redirect('/admin/supplier')->with('message','新增成功!');
+        return redirect($this->redirect)->with('message','新增成功!');
     }
 
     public function show($id)
@@ -44,19 +43,18 @@ class SupplierController extends Controller
         return view($this->edit,compact('items'));
     }
 
-    public function update(Request $request,$id)
+    public function update(SupplierRequest $request,$id)
     {
         $items = Supplier::find($id);
         $items->update($request->all());
 
         if($request->hasFile('img')){
-            $this->delete_file($items->img);
-            $items->img = $this->upload_file($request->file('img'));
+            delete_file($items->img);
+            $items->img = upload_file($request->file('img'));
             $items -> save();
         }
 
-
-        return redirect('/admin/supplier')->with('message','更新成功!');
+        return redirect($this->redirect)->with('message','更新成功!');
     }
 
     public function destroy($id)
@@ -65,6 +63,6 @@ class SupplierController extends Controller
         delete_file($items->img);
         $items->delete();
 
-        return redirect('/admin/supplier')->with('message','刪除成功!');
+        return redirect($this->redirect)->with('message','刪除成功!');
     }
 }

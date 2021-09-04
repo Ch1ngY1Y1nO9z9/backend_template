@@ -11,7 +11,7 @@ class BannerController extends Controller
 {
     function __construct()
     {
-        $this->redirect = '/admin';
+        $this->redirect = '/admin/banner';
         $this->index = 'admin.banners.index';
         $this->create = 'admin.banners.create';
         $this->edit = 'admin.banners.edit';
@@ -32,10 +32,12 @@ class BannerController extends Controller
     public function store(BannerRequest $request)
     {
         $new_record = Banners::create($request->all());
-        $new_record->img = upload_file($request->file('img'),'banner');
+        if($request->hasFile('img')){
+            $new_record->img = upload_file($request->file('img'),'supplier');
+        }
         $new_record->save();
 
-        return redirect('/admin/banner')->with('success','新增成功!');
+        return redirect($this->redirect)->with('success','新增成功!');
     }
 
     public function show($id)
@@ -54,7 +56,7 @@ class BannerController extends Controller
             $items -> save();
         }
 
-        return redirect('/admin/banner')->with('success','更新成功!');
+        return redirect($this->redirect)->with('success','更新成功!');
     }
 
     public function destroy($id)
@@ -63,7 +65,7 @@ class BannerController extends Controller
         delete_file($items->img);
         $items->delete();
 
-        return redirect('/admin/banner')->with('success','刪除成功!');
+        return redirect($this->redirect)->with('success','刪除成功!');
     }
 
 }

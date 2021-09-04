@@ -10,8 +10,16 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">Certification Supplier - 編輯</div>
-
+                @if($errors->any())
+                    @foreach($errors->all() as $error)
+                    <div class="alert alert-danger" role="alert">
+                        {{ $error }}
+                    </div>
+                    @endforeach
+                @endif
                 <div class="card-body">
+                    <a class="btn btn-primary" href="/admin/supplier">返回</a>
+                    <hr>
                     <form method="post" action="/admin/supplier/update/{{$items->id}}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">

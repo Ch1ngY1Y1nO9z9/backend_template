@@ -15,9 +15,11 @@
                     </div>
                 @endif
                 @if($errors->any())
+                    @foreach($errors->all() as $error)
                     <div class="alert alert-danger" role="alert">
-                        {{ $message }}
+                        {{ $error }}
                     </div>
+                    @endforeach
                 @endif
                 <div class="card">
                     <h4 class="card-header">

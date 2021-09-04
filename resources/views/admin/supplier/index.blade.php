@@ -15,9 +15,11 @@
                     </div>
                 @endif
                 @if($errors->any())
+                    @foreach($errors->all() as $error)
                     <div class="alert alert-danger" role="alert">
-                        {{ $message }}
+                        {{ $error }}
                     </div>
+                    @endforeach
                 @endif
 
                 <div class="card">
@@ -107,10 +109,4 @@
             });
         } );
     </script>
-
-    @if(Session::has('message'))
-        <script>
-            alert('更新成功!')
-        </script>
-    @endif
 @endsection

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BannerRequest extends FormRequest
+class SeoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,20 +24,18 @@ class BannerRequest extends FormRequest
     public function rules()
     {
         return [
-            'img' => 'bail|mimes:jpeg,gif,png|max:2048',
-            'alt' => 'required',
-            'sort' => 'required',
+            'title' => 'required',
+            'keyword' => 'required',
+            'description' => 'required'
         ];
     }
 
     public function messages()
     {
         return [
-            'img.max' => '上傳的檔案過大!',
-            'img.mimes' => '上傳的檔案格式錯誤!',
-            'alt.required' => '圖片說明為必填!',
-            'sort.required' => '排序為必填!',
+            'title.required' => '網頁名稱需要有內容!',
+            'keyword.required' => '關鍵字需要有內容!',
+            'description.required' => '網頁描述需要有內容!',
         ];
     }
-
 }
