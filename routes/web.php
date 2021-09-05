@@ -69,55 +69,31 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     //supplier
     Route::get('supplier/create','SupplierController@create');
     Route::apiResource('supplier','SupplierController');
-    // Route::get('supplier','SupplierController@index');
-    // Route::post('supplier/store', 'SupplierController@store');
-    // Route::get('supplier/edit/{id}', 'SupplierController@edit');
-    // Route::post('supplier/update/{id}', 'SupplierController@update');
-    // Route::post('supplier/delete/{id}', 'SupplierController@delete');
 
     //product_video
-    Route::get('product_video','ProductVideoController@index');
     Route::get('product_video/create','ProductVideoController@create');
-    Route::post('product_video/store', 'ProductVideoController@store');
-    Route::get('product_video/edit/{id}', 'ProductVideoController@edit');
-    Route::post('product_video/update/{id}', 'ProductVideoController@update');
-    Route::post('product_video/delete/{id}', 'ProductVideoController@delete');
+    Route::apiResource('product_video','ProductVideoController');
 
-     //product_video
-     Route::get('partner','PartnerController@index');
-     Route::get('partner/create','PartnerController@create');
-     Route::post('partner/store', 'PartnerController@store');
-     Route::get('partner/edit/{id}', 'PartnerController@edit');
-     Route::post('partner/update/{id}', 'PartnerController@update');
-     Route::post('partner/delete/{id}', 'PartnerController@delete');
+
+    //partner
+    Route::get('partner/create','PartnerController@create');
+    Route::apiResource('partner','PartnerController');
 
     // 最新消息
-    Route::get('/news','NewsController@index');
     Route::get('news/create','NewsController@create');
-    Route::post('news/store', 'NewsController@store');
-    Route::get('news/edit/{id}', 'NewsController@edit');
-    Route::post('news/update/{id}', 'NewsController@update');
-    Route::post('news/delete/{id}', 'NewsController@delete');
+    Route::apiResource('/news','NewsController');
 
     //聯絡我們管理
     Route::get('contact','ContactController@index');
     Route::get('contact/{id}','ContactController@show');
-    Route::post('contact/delete/{id}','ContactController@delete');
-    Route::post('contact/delete_all/','ContactController@delete_all')->name('clear_contact');
+    Route::delete('contact/{id}','ContactController@delete');
+    // Route::post('contact/delete_all/','ContactController@delete_all')->name('clear_contact');
 
     //產品類別管理
-    Route::get('product_type','ProductTypeController@index');
     Route::get('product_type/create','ProductTypeController@create');
-    Route::post('product_type/store', 'ProductTypeController@store');
-    Route::get('product_type/edit/{id}', 'ProductTypeController@edit');
-    Route::post('product_type/update/{id}', 'ProductTypeController@update');
-    Route::post('product_type/delete/{id}', 'ProductTypeController@delete');
+    Route::apiResource('product_type','ProductTypeController');
 
     //產品管理
-    Route::get('products','ProductsController@index');
     Route::get('products/create','ProductsController@create');
-    Route::post('products/store', 'ProductsController@store');
-    Route::get('products/edit/{id}', 'ProductsController@edit');
-    Route::post('products/update/{id}', 'ProductsController@update');
-    Route::post('products/delete/{id}', 'ProductsController@delete');
+    Route::apiResource('products','ProductsController');;
 });

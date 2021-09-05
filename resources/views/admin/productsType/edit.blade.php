@@ -10,10 +10,19 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">Supplier Classification - 編輯</div>
+                    @if($errors->any())
+                        @foreach($errors->all() as $error)
+                        <div class="alert alert-danger" role="alert">
+                            {{ $error }}
+                        </div>
+                        @endforeach
+                    @endif
                     <div class="card-body">
-                        <form method="POST" action="/admin/product_type/update/{{$item->id}}" enctype="multipart/form-data">
+                        <a class="btn btn-primary" href="/admin/product_type">返回</a>
+                        <hr>
+                        <form method="POST" action="/admin/product_type/{{$item->id}}" enctype="multipart/form-data">
                             @csrf
-
+                            @method('put')
                             <div class="form-group row">
                                 <label for="img" class="col-2 col-form-label">當前圖片</label>
                                 <div class="col-10">
@@ -24,7 +33,8 @@
                             <div class="form-group row">
                                 <label for="img" class="col-2 col-form-label">上傳圖片</label>
                                 <div class="col-10">
-                                    <input type="file" class="form-control-file" id="img" name="img">
+                                    <input type="file" class="form-control-file" id="img" name="img" accept=".jpg, .png, .gif">
+                                    <small class="text-danger">*檔案上傳限制: 2MB以下</small>
                                 </div>
                                 <div class="col-12"><small class="text-danger">*注意：建議尺寸：64 * 64 (px)</small></div>
                             </div>

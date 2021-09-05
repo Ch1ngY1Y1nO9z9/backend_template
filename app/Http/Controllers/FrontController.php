@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Banners;
-use App\AboutUs;
-use App\ContactUs;
 use App\News;
-use App\Products;
-use App\ProductsType;
-use App\Supplier;
-use App\ProductVideo;
+use App\AboutUs;
+use App\Banners;
 use App\Partner;
-use Illuminate\Http\Request;
+use App\Products;
+use App\Supplier;
+use App\ContactUs;
+use App\Http\Requests\ContactRequest;
+use App\ProductsType;
+use App\ProductVideo;
+use Illuminate\Support\Facades\Validator;
 
 class FrontController extends Controller
 {
@@ -53,11 +54,8 @@ class FrontController extends Controller
         return view('front.productDetail',compact('product'));
     }
 
-    public function contact_us(Request $request) {
-        $validate = Validator::make(Input::all(), [
-            'g-recaptcha-response' => 'required|captcha'
-        ]);
+    public function contact_us(ContactRequest $request) {
         ContactUs::create($request->all());
-        return redirect('/');
+        return redirect('/#ContactUs')->with('message','We will contact you in a few days, thank you for contacting us!');
     }
 }

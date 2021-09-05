@@ -11,8 +11,17 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">產品上架 - 新增</div>
+                    @if($errors->any())
+                        @foreach($errors->all() as $error)
+                        <div class="alert alert-danger" role="alert">
+                            {{ $error }}
+                        </div>
+                        @endforeach
+                    @endif
                     <div class="card-body">
-                        <form method="POST" action="/admin/products/store" enctype="multipart/form-data">
+                        <a class="btn btn-primary" href="/admin/products">返回</a>
+                        <hr>
+                        <form method="POST" action="/admin/products" enctype="multipart/form-data">
                             @csrf
 
                             <div class="event">
@@ -30,7 +39,7 @@
                             <div class="form-group row">
                                 <label class="col-2" for="type">產品分類</label>
                                 <div class="col-10">
-                                    <select class="form-control" id="type" name="type">
+                                    <select class="form-control" id="type" name="type" required>
                                         @foreach($types as $index => $type)
                                             <option value="{{$type->id}}" @if($index == 1)selected @endif>{{$type->type_name_ch}}</option>
                                         @endforeach

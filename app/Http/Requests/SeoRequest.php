@@ -26,16 +26,17 @@ class SeoRequest extends FormRequest
         return [
             'title' => 'required',
             'keyword' => 'required',
-            'description' => 'required'
+            'description' => 'required|max:255'
         ];
     }
 
     public function messages()
     {
         return [
-            'title.required' => '網頁名稱需要有內容!',
-            'keyword.required' => '關鍵字需要有內容!',
-            'description.required' => '網頁描述需要有內容!',
+            'title.required' => '網頁名稱不可留空!',
+            'keyword.required' => '關鍵字不可留空!',
+            'description.required' => '網頁描述不可留空!',
+            'description.size' => '內容過多!網頁描述最多255個字(包含標點符號)',
         ];
     }
 }

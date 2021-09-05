@@ -11,10 +11,19 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">產品上架 - 編輯</div>
+                    @if($errors->any())
+                        @foreach($errors->all() as $error)
+                        <div class="alert alert-danger" role="alert">
+                            {{ $error }}
+                        </div>
+                        @endforeach
+                    @endif
                     <div class="card-body">
-                        <form method="POST" action="/admin/products/update/{{$item->id}}" enctype="multipart/form-data">
+                        <a class="btn btn-primary" href="/admin/products">返回</a>
+                        <hr>
+                        <form method="POST" action="/admin/products/{{$item->id}}" enctype="multipart/form-data">
                             @csrf
-
+                            @method('put')
                             <div class="form-group row">
                                 <label for="img" class="col-2 col-form-label">當前圖片</label>
                                 <div class="col-10">
@@ -35,7 +44,7 @@
                             <div class="form-group row">
                                 <label class="col-2" for="type">產品分類</label>
                                 <div class="col-10">
-                                    <select class="form-control" id="type" name="type">
+                                    <select class="form-control" id="type" name="type" required>
                                         @foreach($types as $type)
                                             <option value="{{$type->id}}" @if($type->id == $item->type)selected @endif>{{$type->type_name_ch}}</option>
                                         @endforeach

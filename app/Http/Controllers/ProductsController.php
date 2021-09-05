@@ -2,100 +2,78 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductsRequest;
 use App\Products;
 use App\ProductsType;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 
 class ProductsController extends Controller
 {
+    function __construct()
+    {
+        $this->redirect = '/admin/products';
+        $this->index = 'admin.products.index';
+        $this->create = 'admin.products.create';
+        $this->edit = 'admin.products.edit';
+    }
+
     public function index()
     {
         $items = Products::all();
-        return view('admin.products.index',compact('items'));
+        return view($this->index, compact('items'));
     }
 
     public function create()
     {
         $types = ProductsType::all();
-        return view('admin.products.create',compact('types'));
+
+        return view($this->create, compact('types'));
     }
 
-    public function store(Request $request)
+    public function store(ProductsRequest $request)
     {
         $new_record =  Products::create($request->all());
 
         if($request->hasFile('img')){
-            $new_record->fill(['img' => $this->upload_file($request->file('img'))]);
+            $new_record->img = upload_file($request->file('img'),'products');
         }
 
         $new_record->save();
 
-        return redirect('/admin/products');
+        return redirect($this->redirect)->with('success','新增成功!');
     }
 
     public function show($id)
     {
-        $item = Products::find($id);
+        $item = Products::findOrFail($id);
         $types = ProductsType::all();
         return view('admin.products.edit',compact('item','types'));
     }
 
-    public function update(Request $request,$id)
+    public function update(ProductsRequest $request,$id)
     {
         $item = Products::find($id);
-        $item->type = $request->type;
-        $item->name_ch = $request->name_ch;
-        $item->links = $request->links;
-        $item->content_ch = $request->content_ch;
-        $item->sort = $request->sort;
-
+        $item->update($request->all());
         if($request->hasFile('img')){
-            $this->delete_file($item->img);
-            $item->img = $this->upload_file($request->file('img'));
+            delete_file($item->img);
+            $item->img = upload_file($request->file('img'),'products');
         }
 
         $item->save();
 
-        return redirect('/admin/products');
+        return redirect($this->redirect)->with('success','更新成功!');
     }
 
-    public function delete(Request $request,$id)
+    public function destroy($id)
     {
         $items = Products::find($id);
 
-        if($items->image_url){
-            $this->delete_file($items->image_url);
+        if($items->img){
+            delete_file($items->img);
         }
 
         $items->delete();
 
-        return redirect()->back();
-    }
-
-    //上傳檔案
-    public function upload_file($file){
-        $allowed_extensions =["png", "jpg", "gif", "PNG", "JPG", "GIF","jpeg","JPEG"];
-
-        if ($file->getClientOriginalExtension() &&
-            !in_array($file->getClientOriginalExtension(), $allowed_extensions))
-        {
-            return redirect()->back()->with('message','僅接受.jpg, .png, .gif, .jepg格式檔案!');
-        }
-        $extension = $file->getClientOriginalExtension();
-        $destinationPath = public_path() . '/products/';
-        $original_filename = $file->getClientOriginalName();
-
-        $filename = $file->getFilename() . '.' . $extension;
-        $url = '/products/' . $filename;
-
-        $file->move($destinationPath, $filename);
-
-        return $url;
-    }
-
-    //刪除檔案
-    public function delete_file($path){
-        File::delete(public_path().$path);
+        return redirect($this->redirect)->with('success','刪除成功!');
     }
 }

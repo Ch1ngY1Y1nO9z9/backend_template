@@ -31,7 +31,8 @@
                             <label for="img" class="col-sm-2 col-form-label">上傳新圖片<br><small
                                     class="text-danger">*建議圖片尺寸1920px(寬)*730px(高)</small></label>
                             <div class="col-sm-10">
-                                <input type="file" class="form-control" id="img" value="" name="img">
+                                <input type="file" class="form-control" id="img" value="" name="img" accept=".jpg, .png, .gif">
+                                <small class="text-danger">*檔案上傳限制: 2MB以下</small>
                             </div>
                         </div>
                         <hr>

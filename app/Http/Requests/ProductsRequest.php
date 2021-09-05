@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SupplierRequest extends FormRequest
+class ProductsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,10 @@ class SupplierRequest extends FormRequest
     {
         return [
             'img' => 'bail|mimes:jpeg,gif,png|max:2048',
-            'title_ch' => 'required',
-            'subtitle_ch' => 'required',
-            'links' => 'max:255',
+            'type' => 'required',
+            'name_ch' => 'required|max:255',
+            'content_ch' => 'required',
+            'links' => 'required|max:255',
             'sort' => 'required',
         ];
     }
@@ -37,9 +38,12 @@ class SupplierRequest extends FormRequest
         return [
             'img.max' => '上傳的檔案過大!',
             'img.mimes' => '上傳的檔案格式錯誤!',
-            'title_ch.required' => '標題為必填!',
-            'subtitle_ch.required' => '次標題為必填!',
-            'links.size' => '網址過長!',
+            'type.required' => '分類不可為空!',
+            'name_ch.required' => '產品名稱不可為空!',
+            'name_ch.max' => '產品名稱過長!',
+            'content_ch.required' => '簡述不可為空!',
+            'links.required' => '超連結不可為空!',
+            'links.max' => '網址過長!',
             'sort.required' => '排序為必填!',
         ];
     }

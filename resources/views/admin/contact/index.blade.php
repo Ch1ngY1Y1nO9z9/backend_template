@@ -10,6 +10,19 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
+            {{-- 顯示任何成功與失敗的訊息 --}}
+            @if(Session::has('success'))
+                <div class="alert alert-success" role="alert">
+                    {{Session::get('success')}}
+                </div>
+            @endif
+            @if($errors->any())
+                @foreach($errors->all() as $error)
+                    <div class="alert alert-danger" role="alert">
+                        {{ $error }}
+                    </div>
+                @endforeach
+            @endif
             <div class="card">
                 <h4 class="card-header">
                     聯絡我們-管理
@@ -37,9 +50,10 @@
                                     <a class="btn btn-danger btn-sm" href="#" data-itemid="{{$list->id}}">刪除</a>
 
                                     <form class="destroy-form" data-itemid="{{$list->id}}"
-                                          action="/admin/contact/delete/{{$list->id}}" method="POST"
+                                          action="/admin/contact/{{$list->id}}" method="POST"
                                           style="display: none;">
                                         @csrf
+                                        @method('delete')
                                     </form>
                                 </td>
                             </tr>

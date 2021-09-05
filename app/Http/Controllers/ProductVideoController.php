@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\ProductVideo;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
+use App\Http\Requests\ProductVideoRequest;
 
 class ProductVideoController extends Controller
 {
     function __construct()
     {
-        $this->redirect = '/admin';
+        $this->redirect = '/admin/product_video';
         $this->index = 'admin.productVideo.index';
         $this->create = 'admin.productVideo.create';
         $this->edit = 'admin.productVideo.edit';
@@ -28,76 +27,46 @@ class ProductVideoController extends Controller
         return view($this->create);
     }
 
-    public function store(Request $request)
+    public function store(ProductVideoRequest $request)
     {
-        $new_record = new ProductVideo();
-        $new_record -> title_ch = $request->title_ch;
-        $new_record -> links = $request->links;
-
+        $new_record = ProductVideo::create($request->all());
         if($request->hasFile('img')){
-            $new_record->img = $this->upload_file($request->file('img'));
+            $new_record->img = upload_file($request->file('img'),'productVideo');
         }
-
-        $new_record -> sort = $request->sort;
-
         $new_record -> save();
-        return redirect('/admin/product_video')->with('message','新增成功!');
+
+        return redirect($this->redirect)->with('success','新增成功!');
     }
 
     public function show($id)
     {
-        $items = ProductVideo::find($id);
+        $items = ProductVideo::findOrFail($id);
         return view($this->edit,compact('items'));
     }
 
-    public function update(Request $request,$id)
+    public function update(ProductVideoRequest $request,$id)
     {
-        $items = ProductVideo::find($id);
+        $items = ProductVideo::findOrFail($id);
         $items -> title_ch = $request->title_ch;
         $items -> links = $request->links;
         if($request->hasFile('img')){
-            $this->delete_file($items->img);
-            $items->img = $this->upload_file($request->file('img'));
+            delete_file($items->img);
+            $items->img = upload_file($request->file('img'),'productVideo');
         }
 
         $items -> sort = $request->sort;
 
         $items -> save();
 
-        return redirect('/admin/product_video')->with('message','更新成功!');
+        return redirect($this->redirect)->with('success','更新成功!');
     }
 
     public function destroy($id)
     {
-        $items = ProductVideo::find($id);
-        $this->delete_file($items->img);
+        $items = ProductVideo::findOrFail($id);
+        delete_file($items->img);
         $items->delete();
 
-        return redirect('/admin/product_video')->with('message','刪除成功!');
-    }
-
-    //上傳檔案
-    public function upload_file($file){
-        $allowed_extensions =["png", "jpg", "gif", "PNG", "JPG", "GIF","jpeg","JPEG","pdf"];
-        if ($file->getClientOriginalExtension() &&
-            !in_array($file->getClientOriginalExtension(), $allowed_extensions))
-        {
-            return redirect()->back()->with('message','僅接受.jpg, .png, .gif, .jepg, .pdf格式檔案!');
-        }
-        $extension = $file->getClientOriginalExtension();
-        $destinationPath = public_path() . '/upload/product_video/';
-        $original_filename = $file->getClientOriginalName();
-
-        $filename = $file->getFilename() . '.' . $extension;
-        $url = '/upload/product_video/' . $filename;
-
-        $file->move($destinationPath, $filename);
-
-        return $url;
-    }
-
-    //刪除檔案
-    public function delete_file($path){
-        File::delete(public_path().$path);
+        return redirect($this->redirect)->with('success','刪除成功!');
     }
 }

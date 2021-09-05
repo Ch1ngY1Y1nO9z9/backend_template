@@ -42,13 +42,13 @@ class BannerController extends Controller
 
     public function show($id)
     {
-        $items = Banners::find($id);
+        $items = Banners::findOrFail($id);
         return view($this->edit,compact('items'));
     }
 
     public function update(BannerRequest $request,$id)
     {
-        $items = Banners::find($id);
+        $items = Banners::findOrFail($id);
         $items -> update($request->all());
         if($request->hasFile('img')){
             delete_file($items->img);
@@ -61,7 +61,7 @@ class BannerController extends Controller
 
     public function destroy($id)
     {
-        $items = Banners::find($id);
+        $items = Banners::findOrFail($id);
         delete_file($items->img);
         $items->delete();
 

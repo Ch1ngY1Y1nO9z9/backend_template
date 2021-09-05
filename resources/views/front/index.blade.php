@@ -222,7 +222,7 @@
             </div>
             <div class="container px-5 py-32 mx-auto flex" id="ContactUs">
                 <div
-                    class="w-full bg-black bg-opacity-50 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 relative z-10 shadow-md">
+                    class="w-full bg-black bg-opacity-50 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 relative shadow-md">
                     <h2 class="text-white text-lg mb-1 font-medium title-font">Contact Us</h2>
                     <p class="leading-relaxed mb-5 text-white">
                     If you are not looking for suppliers in the plafom,you can mail to us.<br>
@@ -236,6 +236,11 @@
                                     <label for="companyName" class="leading-7 text-sm text-white">Company</label>
                                     <input type="text" id="companyName" name="companyName" required
                                         class="w-full bg-black bg-opacity-25 rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-white py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    @error('companyName')
+                                        <span class="text-red-200" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
 
                                 <div class="relative mb-4">
@@ -247,11 +252,21 @@
                                     <label for="companyWebsite" class="leading-7 text-sm text-white">Website</label>
                                     <input type="text" id="companyWebsite" name="companyWebsite" required
                                         class="w-full bg-black bg-opacity-25 rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-white py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    @error('companyWebsite')
+                                        <span class="text-red-200" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="relative mb-4">
                                     <label for="business" class="leading-7 text-sm text-white">Business</label>
                                     <input type="text" id="business" name="business" required
                                         class="w-full bg-black bg-opacity-25 rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-white py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    @error('business')
+                                        <span class="text-red-200" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
 
                             </div>
@@ -260,6 +275,12 @@
                                     <label for="email" class="leading-7 text-sm text-white">Email</label>
                                     <input type="email" id="email" name="email" required
                                         class="w-full bg-black bg-opacity-25 rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-white py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+
+                                    @error('email')
+                                        <span class="text-red-200" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="relative mb-4">
                                     <label for="message" class="leading-7 text-sm text-white">Message</label>
@@ -322,4 +343,11 @@
         });
 
     </script>
+
+@if(Session::has('message'))
+    <script>
+        alert('We will contact you in a few days, thank you for contacting us!')
+    </script>
+@endif
+
 @endsection

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\ContactUs;
-use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
@@ -13,14 +12,14 @@ class ContactController extends Controller
     }
 
     public function show($id){
-        $contact_info = ContactUs::find($id);
+        $contact_info = ContactUs::findOrFail($id);
         return view('admin.contact.show',compact('contact_info'));
     }
 
-    public function delete(Request $request,$id){
+    public function delete($id){
         $items = ContactUs::find($id);
         $items->delete();
 
-        return redirect('/admin/contact')->with('message','成功!');
+        return redirect('/admin/contact')->with('success','刪除成功!');
     }
 }

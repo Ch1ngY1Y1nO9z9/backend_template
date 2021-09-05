@@ -8,6 +8,19 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
+                {{-- 顯示任何成功與失敗的訊息 --}}
+                @if(Session::has('success'))
+                    <div class="alert alert-success" role="alert">
+                        {{Session::get('success')}}
+                    </div>
+                @endif
+                @if($errors->any())
+                    @foreach($errors->all() as $error)
+                        <div class="alert alert-danger" role="alert">
+                            {{ $error }}
+                        </div>
+                    @endforeach
+                @endif
                 <div class="card">
                     <div class="card-header">
                     Supplier Classification 管理
@@ -34,13 +47,14 @@
                                     <td>{{$item->subtitle_ch}}</td>
                                     <td>{{$item->sort}}</td>
                                     <td>
-                                        <a class="btn btn-primary btn-sm" href="/admin/product_type/edit/{{$item->id}}">編輯</a>
+                                        <a class="btn btn-success btn-sm" href="/admin/product_type/{{$item->id}}">編輯</a>
                                         <a class="btn btn-danger  btn-sm" href="#" data-itemid="{{$item->id}}" href="">刪除</a>
 
                                         <form class="destroy-form" data-itemid="{{$item->id}}"
-                                            action="/admin/product_type/delete/{{$item->id}}" method="POST"
+                                            action="/admin/product_type/{{$item->id}}" method="POST"
                                             style="display: none;">
                                           @csrf
+                                          @method('delete')
                                       </form>
                                     </td>
                                 </tr>
@@ -60,7 +74,7 @@
     <script>
         $(document).ready(function() {
             $('#example').DataTable({
-                order: [[ 2, 'desc' ]],
+                order: [[ 3, 'desc' ]],
                 language:{
                     "processing":   "處理中...",
                     "loadingRecords": "載入中...",
@@ -94,9 +108,4 @@
             });
         });
     </script>
-    @if(Session::has('message'))
-        <script>
-            alert('更新成功!')
-        </script>
-    @endif
 @endsection

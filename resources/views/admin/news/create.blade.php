@@ -11,13 +11,22 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">最新消息 - 新增</div>
+                    @if($errors->any())
+                        @foreach($errors->all() as $error)
+                        <div class="alert alert-danger" role="alert">
+                            {{ $error }}
+                        </div>
+                        @endforeach
+                    @endif
                     <div class="card-body">
-                        <form method="POST" action="/admin/news/store" enctype="multipart/form-data">
+                        <a class="btn btn-primary" href="/admin/news">返回</a>
+                        <hr>
+                        <form method="POST" action="/admin/news" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group row">
                                 <label for="title_ch" class="col-2 col-form-label">日期</label>
                                 <div class="col-10">
-                                <input type="datetime-local" name="date" value="">
+                                <input type="date" name="date" value="" required>
                                 </div>
                             </div>
                             <hr>
@@ -25,7 +34,8 @@
                                 <label for="img" class="col-sm-2 col-form-label">縮圖 <br><small
                                         class="text-danger">*建議圖片尺寸400px(寬)*280px(高)</small></label>
                                 <div class="col-sm-10">
-                                    <input type="file" class="form-control" id="img" value="" name="img" required>
+                                    <input type="file" class="form-control" id="img" value="" name="img" required accept=".jpg, .png, .gif">
+                                    <small class="text-danger">*檔案上傳限制: 2MB以下</small>
                                 </div>
                             </div>
                             <hr>

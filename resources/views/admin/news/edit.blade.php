@@ -3,45 +3,6 @@
 @section('css')
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-    /* .news_infos {
-        position: relative;
-    }
-
-    .news_infos .btn-danger {
-        border-radius: 50%;
-        position: absolute;
-        right: -5px;
-        top: -5px;
-    }
-
-    .news_infos .sort {
-        display: flex;
-        margin-top: 5px;
-    }
-
-    .news_infos label {
-        margin: 0 5px;
-        line-height: 37px;
-    }
-
-    .news_infos input {
-        width: 100%;
-    }
-
-    .time_btn {
-        padding: 3px 20px;
-        border: 1px solid black;
-        cursor: pointer;
-        height: 30px;
-    }
-
-    .time_btn.active {
-        background-color: black;
-        color: white;
-    } */
-
-</style>
 @endsection
 
 @section('content')
@@ -50,14 +11,23 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">最新消息 - 編輯</div>
-
+                    @if($errors->any())
+                        @foreach($errors->all() as $error)
+                        <div class="alert alert-danger" role="alert">
+                            {{ $error }}
+                        </div>
+                        @endforeach
+                    @endif
                     <div class="card-body">
-                        <form method="POST" action="/admin/news/update/{{$news->id}}" enctype="multipart/form-data">
+                        <a class="btn btn-primary" href="/admin/news">返回</a>
+                        <hr>
+                        <form method="POST" action="/admin/news/{{$news->id}}" enctype="multipart/form-data">
                             @csrf
+                            @method('put')
                             <div class="form-group row">
                                 <label for="title_ch" class="col-2 col-form-label">日期</label>
                                 <div class="col-10">
-                                <input type="datetime-local" name="date" value="{{$news->date}}">
+                                <input type="date" name="date" value="{{$news->date}}" required>
                                 </div>
                             </div>
                             <hr>
@@ -69,7 +39,8 @@
                                 <label for="img" class="col-sm-2 col-form-label">上傳新圖片<br><small
                                         class="text-danger">*建議圖片尺寸400px(寬)*280px(高)</small></label>
                                 <div class="col-sm-10">
-                                    <input type="file" class="form-control" id="img" name="img">
+                                    <input type="file" class="form-control" id="img" name="img" accept=".jpg, .png, .gif">
+                                    <small class="text-danger">*檔案上傳限制: 2MB以下</small>
                                 </div>
                             </div>
                             <hr>

@@ -34,35 +34,35 @@ class SupplierController extends Controller
             $new_record->img = upload_file($request->file('img'),'supplier');
         }
         $new_record -> save();
-        return redirect($this->redirect)->with('message','新增成功!');
+        return redirect($this->redirect)->with('success','新增成功!');
     }
 
     public function show($id)
     {
-        $items = Supplier::find($id);
+        $items = Supplier::findOrFail($id);
         return view($this->edit,compact('items'));
     }
 
     public function update(SupplierRequest $request,$id)
     {
-        $items = Supplier::find($id);
+        $items = Supplier::findOrFail($id);
         $items->update($request->all());
 
         if($request->hasFile('img')){
             delete_file($items->img);
-            $items->img = upload_file($request->file('img'));
+            $items->img = upload_file($request->file('img'),'supplier');
             $items -> save();
         }
 
-        return redirect($this->redirect)->with('message','更新成功!');
+        return redirect($this->redirect)->with('success','更新成功!');
     }
 
     public function destroy($id)
     {
-        $items = Supplier::find($id);
+        $items = Supplier::findOrFail($id);
         delete_file($items->img);
         $items->delete();
 
-        return redirect($this->redirect)->with('message','刪除成功!');
+        return redirect($this->redirect)->with('success','刪除成功!');
     }
 }

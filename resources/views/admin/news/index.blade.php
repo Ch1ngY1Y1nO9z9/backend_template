@@ -8,6 +8,19 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
+                {{-- 顯示任何成功與失敗的訊息 --}}
+                @if(Session::has('success'))
+                    <div class="alert alert-success" role="alert">
+                        {{Session::get('success')}}
+                    </div>
+                @endif
+                @if($errors->any())
+                    @foreach($errors->all() as $error)
+                        <div class="alert alert-danger" role="alert">
+                            {{ $error }}
+                        </div>
+                    @endforeach
+                @endif
                 <div class="card">
                     <div class="card-header">
                         最新消息管理
@@ -34,13 +47,14 @@
                                     <td>{{$news->content_ch}}</td>
                                     <td>{{$news->sort}}</td>
                                     <td>
-                                        <a class="btn btn-primary btn-sm" href="/admin/news/edit/{{$news->id}}">編輯</a>
+                                        <a class="btn btn-success btn-sm" href="/admin/news/{{$news->id}}">編輯</a>
                                         <a class="btn btn-danger  btn-sm" href="#" data-itemid="{{$news->id}}" href="">刪除</a>
 
                                         <form class="destroy-form" data-itemid="{{$news->id}}"
-                                            action="/admin/news/delete/{{$news->id}}" method="POST"
+                                            action="/admin/news/{{$news->id}}" method="POST"
                                             style="display: none;">
                                           @csrf
+                                          @method('delete')
                                       </form>
                                     </td>
                                 </tr>
@@ -94,10 +108,4 @@
             });
         } );
     </script>
-
-    @if(Session::has('message'))
-        <script>
-            alert('更新成功!')
-        </script>
-    @endif
 @endsection
