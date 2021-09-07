@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PartnerRequest;
 use App\Partner;
+use App\Http\Requests\PartnerRequest;
 
 class PartnerController extends Controller
 {
